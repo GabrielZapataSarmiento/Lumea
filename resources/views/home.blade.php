@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'MS2') }}</title>
+    <title>{{ config('app.name', 'Lumea') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -15,7 +15,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
+<div class="min-h-screen" style="background-image: linear-gradient(to right, #AA404A, #212121);">
     @include('layouts.navigation')
 
     <!-- Page Heading -->
@@ -64,6 +64,43 @@
                 </div>
             </div>
         @endif
+
+        <!-- About us -->
+        <div class="container mx-auto px-4 py-6">
+            <div class="max-w-5xl mx-auto bg-white p-8 rounded-lg shadow-md">
+                <h1 class="text-4xl font-bold mb-6 text-center">About Us</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div class="flex justify-center">
+                        <img src="https://via.placeholder.com/300" alt="Our Team" class="w-full h-auto rounded-lg shadow-md">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <p class="text-gray-700 mb-4">
+                            Welcome to our company! We are dedicated to providing the best service possible. Our team of professionals is committed to helping you achieve your goals. We believe in quality, integrity, and customer satisfaction. Thank you for choosing us. We look forward to serving you.
+                        </p>
+                        <p class="text-gray-700">
+                            Our mission is to deliver high-quality products that bring value to our customers. We continuously strive to improve our services and exceed your expectations.
+                        </p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="flex flex-col items-center">
+                        <img src="https://via.placeholder.com/200" alt="Team Member 1" class="w-40 h-40 rounded-full mb-4 shadow-md">
+                        <h2 class="text-xl font-semibold mb-2">Team Member 1</h2>
+                        <p class="text-gray-500 text-center">Position</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <img src="https://via.placeholder.com/200" alt="Team Member 2" class="w-40 h-40 rounded-full mb-4 shadow-md">
+                        <h2 class="text-xl font-semibold mb-2">Team Member 2</h2>
+                        <p class="text-gray-500 text-center">Position</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <img src="https://via.placeholder.com/200" alt="Team Member 3" class="w-40 h-40 rounded-full mb-4 shadow-md">
+                        <h2 class="text-xl font-semibold mb-2">Team Member 3</h2>
+                        <p class="text-gray-500 text-center">Position</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
 </body>
