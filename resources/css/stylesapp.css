@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+body {
+    font-family: 'OUTFIT', sans-serif;
+}
+
+.container {
+    max-width: 400px; /* Adjust as needed */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.home-button {
+    position: fixed;
+    bottom: 3rem;
+    left: 50%;
+    --tw-translate-x: -50%;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    width: 25px;
+    height: 25px;
+}
+
+.card {
+    width: 350px;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: #292830;
+    margin-bottom: 2rem;
+    cursor: default;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add drop shadow */
+}
+
+.cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.card-content {
+    font-family: 'Outfit', sans-serif; /* Use the 'Outfit' font for card content */
+    color: #fafafa;
+}
+
+.card-content h4 {
+    font-size: 24px;
+}
+
+.card-content p {
+    font-size: 19px;
+    color: hsl(0, 0%, 70%);
+}
+
+.swipe-buttons {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
