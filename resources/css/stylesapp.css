@@ -2,20 +2,30 @@
 
 body {
     font-family: 'OUTFIT', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom, #b91c1c, #1f2937); /* Adjusted to use correct color names */
+    overflow: hidden; /* Prevents scrollbar on swipe */
 }
 
 .container {
+    position: relative;
+    width: 100%;
     max-width: 400px; /* Adjust as needed */
-    margin: 0 auto;
-    padding: 20px;
+    height: 100%; /* Ensure the container takes full height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .home-button {
     position: fixed;
     bottom: 3rem;
     left: 50%;
-    --tw-translate-x: -50%;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    transform: translateX(-50%);
     width: 25px;
     height: 25px;
 }
@@ -25,9 +35,24 @@ body {
     border-radius: 30px;
     overflow: hidden;
     background-color: #292830;
-    margin-bottom: 2rem;
-    cursor: default;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add drop shadow */
+    cursor: grab;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.card.moving {
+    transition: none;
+    cursor: grabbing;
+}
+
+.card.removed {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .cover img {
@@ -38,7 +63,7 @@ body {
 }
 
 .card-content {
-    font-family: 'Outfit', sans-serif; /* Use the 'Outfit' font for card content */
+    font-family: 'Outfit', sans-serif;
     color: #fafafa;
 }
 
@@ -57,3 +82,26 @@ body {
     padding-bottom: 20px;
 }
 
+.swipe-buttons button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.swipe-buttons button img {
+    width: 80px;
+    height: 80px;
+}
+
+.swipe-buttons button:focus {
+    outline: none;
+}
+
+.fa-heart {
+    color: #4CAF50;
+}
+
+.fa-remove {
+    color: #FF5722;
+}
