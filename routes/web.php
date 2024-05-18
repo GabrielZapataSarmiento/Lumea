@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AppController;
+use App\Http\Controllers\SongController;
 
 Route::get('/', function () {
     return view('home');
@@ -12,9 +14,7 @@ Route::get('/home', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/app', function () {
-        return view('app');
-    })->name('app');
+    Route::get('/app', [AppController::class, 'index'])->name('app');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
