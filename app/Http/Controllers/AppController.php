@@ -15,4 +15,10 @@ class AppController extends Controller
         $songs = Song::whereNotIn('id', $votedSongIds)->get();
         return view('app', compact('songs'));
     }
+
+    public function fetchSongs()
+    {
+        $songs = Song::all();
+        return response()->json($songs);
+    }
 }
