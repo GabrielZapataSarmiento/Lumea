@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 setInterval(function () {
     Livewire.dispatch('loadSongs');
-}, 30000);
+}, 15000);
 
 
 
