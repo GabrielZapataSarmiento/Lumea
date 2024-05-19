@@ -32,7 +32,15 @@ class VoteSong extends Component
             'vote_type' => $voteType,
         ]);
 
+        $this->dispatch('loadSongs');
+
         return response()->json(['success' => true]);
+    }
+
+    public function loadSongs()
+    {
+        $this->songs = Song::all();
+        $this->dispatch('loadSongs'); // Emit the loadSongs event after loading songs
     }
 
     public function render()
