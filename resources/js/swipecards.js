@@ -1,92 +1,27 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var allCards = document.querySelectorAll('.card');
-    var dislikeButtons = document.querySelectorAll('.swipe-buttons button:first-child');
-    var likeButtons = document.querySelectorAll('.swipe-buttons button:last-child');
-
-    var moveOutWidth = document.body.clientWidth;
-    var threshold = 50;
-
-    function initCards() {
-        var newCards = document.querySelectorAll('.card:not(.removed)');
-        newCards.forEach(function (card, index) {
-            card.style.cssText = 'z-index: ' + (newCards.length - index) +
-                '; transform: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);';
-        });
-    }
-
-    initCards();
-
-    var center = window.innerWidth / 2;
-    var blurMaxRadius = 20;
-
-    allCards.forEach(function (el) {
-        var hammertime = new Hammer(el);
-        var translateX = 0;
-        var translateY = 0;
-        var blurIntensity = 0;
-
-        hammertime.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL, threshold: 5 });
-
-        hammertime.on('panstart', function (event) {
-            el.classList.add('moving');
-            var cardRect = el.getBoundingClientRect();
-            if (event.center.x !== center) {
-                blurIntensity = calculateBlurIntensity(event.center.x, window.innerWidth);
-                el.style.filter = 'blur(' + blurIntensity + 'px)';
-            }
-        });
-
-        hammertime.on('pan', function (event) {
-            translateX = event.deltaX * 0.5;
-            translateY = event.deltaY * 0.5;
-            var angle = translateX * 0.1;
-            if (angle > 15) angle = 15;
-            if (angle < -15) angle = -15;
-            blurIntensity = calculateBlurIntensity(center + translateX, window.innerWidth);
-            el.style.transform = 'translate(' + (translateX - 50) + '%, ' + (translateY - 50) + '%) rotate(' + angle + 'deg)';
-            el.style.filter = 'blur(' + blurIntensity + 'px)';
-        });
-
-        hammertime.on('panend', function (event) {
-            el.classList.remove('moving');
-            if (Math.abs(translateX) > threshold) {
-                var toX = translateX > 0 ? moveOutWidth : -moveOutWidth;
-                var rotate = translateX > 0 ? 30 : -30;
-                el.style.transform = 'translate(' + toX + 'px, ' + translateY + 'px) rotate(' + rotate + 'deg)';
-                el.classList.add('removed');
-                setTimeout(function() {
-                    el.remove();
-                    initCards();
-                }, 500);
-            } else {
-                el.style.transform = 'translate(-50%, -50%)';
-                el.style.filter = 'none';
-            }
-        });
-    });
-
-    function calculateBlurIntensity(cardX, screenWidth) {
-        var distanceFromCenter = Math.abs(cardX - center);
-        var distancePercentage = distanceFromCenter / (screenWidth / 2);
-        var blurIntensity = distancePercentage * distancePercentage * blurMaxRadius;
-        return blurIntensity;
-    }
-
     function createButtonListener(love) {
         return function (event) {
-            var cards = document.querySelectorAll('.card:not(.removed)');
-            if (!cards.length) return false;
-            var card = cards[0];
-            card.classList.add('removed');
+            var card = event.target.closest('.card');
+            if (!card) return;
+            var voteType = love ? 'like' : 'dislike';
+            console.log('Vote type:', voteType); // Log the voteType
             var moveOutWidth = document.body.clientWidth * 1;
+            card.style.transition = 'transform 0.5s ease, opacity 0.5s ease'; // Apply transition
             card.style.transform = 'translate(' + (love ? moveOutWidth : -moveOutWidth) + 'px, -100px) rotate(' + (love ? -15 : 15) + 'deg)';
-            setTimeout(function() {
+            card.style.opacity = '0'; // Reduce opacity while moving
+            if (voteType === 'like') {
+                sendVote(card.getAttribute('data-song-id'), voteType, card);
+            }
+            setTimeout(function () {
                 card.remove();
-                initCards();
+                checkIfAllVoted();
             }, 500);
             event.preventDefault();
         };
     }
+
+    var dislikeButtons = document.querySelectorAll('.swipe-buttons button:first-child');
+    var likeButtons = document.querySelectorAll('.swipe-buttons button:last-child');
 
     dislikeButtons.forEach(button => {
         button.addEventListener('click', createButtonListener(false));
@@ -95,4 +30,47 @@ document.addEventListener('DOMContentLoaded', function () {
     likeButtons.forEach(button => {
         button.addEventListener('click', createButtonListener(true));
     });
+
+    function sendVote(songId, voteType, card) {
+        console.log(`Sending vote for songId: ${songId}, voteType: ${voteType}`);
+        // Your fetch code for sending the vote
+    }
+
+    function checkIfAllVoted() {
+        var remainingCards = document.querySelectorAll('.card:not(.removed)').length;
+        var noMoreCards = document.querySelector('.no-more-cards');
+        if (remainingCards === 0) {
+            noMoreCards.classList.remove('hidden');
+        } else {
+            noMoreCards.classList.add('hidden');
+        }
+    }
+
+    function initCards() {
+        var newCards = document.querySelectorAll('.card:not(.removed)');
+        newCards.forEach(function (card, index) {
+            card.style.cssText = 'z-index: ' + (newCards.length - index) +
+                '; transform: none; opacity: 1; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); transition: transform 0.5s ease, opacity 0.5s ease'; // Add opacity transition here
+        });
+        checkIfAllVoted(newCards.length);
+    }
+
+    // Listen for the custom event emitted by Livewire
+    document.addEventListener('songsLoaded', function () {
+        initCards(); // Reinitialize cards after songs are loaded
+    });
+
+    // Call initCards when the DOM is loaded
+    initCards();
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    Livewire.dispatch('loadSongs');
+});
+
+setInterval(function () {
+    Livewire.dispatch('loadSongs');
+}, 15000);
+
+
+

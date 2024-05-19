@@ -10,7 +10,8 @@
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @livewireStyles
 </head>
 <body class="bg-gradient-to-b from-red-600 to-gray-900 text-white">
 
@@ -18,38 +19,7 @@
     <div class="container">
         <div class="flex justify-center">
 
-            <div class="card">
-                <div class="cover">
-                    <img src="{{ asset('/images/picture.png') }}" alt="cover" class="object-cover w-full h-full rounded-lg pl-4 pr-4 pt-4 pb-2" draggable="false">
-                </div>
-
-                <div class="card-content pl-4 pb-4">
-                    <h4>Artist name</h4>
-                    <p>Song title</p>
-                </div>
-
-                <div class="swipe-buttons flex justify-center">
-                    <button id="dislikeButton"><img src="{{asset('/images/red button.png')}}" alt="Dislike"></button>
-                    <button id="likeButton"><img src="{{asset('/images/green button.png')}}" alt="Like"></button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="cover">
-                    <img src="{{ asset('/images/picture.png') }}" alt="cover" class="object-cover w-full h-full rounded-lg pl-4 pr-4 pt-4 pb-2" draggable="false">
-                </div>
-
-                <div class="card-content pl-4 pb-4">
-                    <h4>Artist name</h4>
-                    <p>Song title</p>
-                </div>
-
-                <div class="swipe-buttons flex justify-center">
-                    <button id="dislikeButton"><img src="{{asset('/images/red button.png')}}" alt="Dislike"></button>
-                    <button id="likeButton"><img src="{{asset('/images/green button.png')}}" alt="Like"></button>
-                </div>
-            </div>
-
+            <livewire:polling-livewire-component />
 
         </div>
     </div>
@@ -60,8 +30,8 @@
     <img src="{{asset('/images/Home.png')}}" alt="Home">
 </a>
 
+@livewireScripts
 
-</div>
 </body>
 </html>
 
