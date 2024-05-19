@@ -15,6 +15,7 @@ Route::get('/home', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/app', [AppController::class, 'index'])->name('app');
+    Route::get('/app/fetch-songs', [AppController::class, 'fetchSongs']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
