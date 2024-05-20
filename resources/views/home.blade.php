@@ -72,7 +72,7 @@
         <button class="bg-black text-white py-3 px-6 rounded-full text-lg shadow-lg hover:bg-gray-900 transition duration-300">Look what's new</button>
     </div>
     <div class="w-1/2">
-        <img src="{{ asset('/images/picture.png') }}" alt="Smiling person" class="rounded-lg">
+        <img src="{{ asset('/images/Ibiza.png') }}" alt="Smiling person" class="rounded-lg">
     </div>
 </div>
 
