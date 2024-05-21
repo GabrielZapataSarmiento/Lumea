@@ -17,8 +17,8 @@
 </div>
 
 <!-- Home Button -->
-<a href="{{ route('home') }}" class="fixed bottom-4 z-50">
-    <img src="{{ asset('/images/Home.png') }}" alt="Home" class="w-12 h-12">
+<a href="{{ route('home') }}" class="fixed bottom-8 z-50">
+    <img src="{{ asset('/images/Home.png') }}" alt="Home" class="w-7 h-7">
 </a>
 
 <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>

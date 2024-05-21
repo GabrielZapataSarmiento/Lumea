@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var voteType = love ? 'like' : 'dislike';
             console.log('Vote type:', voteType); // Log the voteType
 
-            var moveOutWidth = document.body.clientWidth * 1;
+            var moveOutWidth = document.body.clientWidth;
             card.style.transition = 'transform 0.5s ease, opacity 0.5s ease'; // Apply transition
             card.style.transform = 'translate(' + (love ? moveOutWidth : -moveOutWidth) + 'px, -100px) rotate(' + (love ? -15 : 15) + 'deg)';
             card.style.opacity = '0'; // Reduce opacity while moving
@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             setTimeout(function () {
-                card.remove();
-                checkIfAllVoted();
+                card.classList.add('removed');
+                initCards(); // Reinitialize cards after one is removed
             }, 500);
 
             event.preventDefault();
@@ -54,10 +54,29 @@ document.addEventListener('DOMContentLoaded', function () {
     function initCards() {
         var newCards = document.querySelectorAll('.card:not(.removed)');
         newCards.forEach(function (card, index) {
-            card.style.cssText = 'z-index: ' + (newCards.length - index) +
-                '; transform: none; opacity: 1; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); transition: transform 0.5s ease, opacity 0.5s ease'; // Add opacity transition here
+            if (index === 0) {
+                card.style.cssText = `
+                    z-index: ${newCards.length - index};
+                    transform: translate(-50%, -50%);
+                    opacity: 1;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transition: transform 0.5s ease, opacity 0.5s ease;
+                `;
+            } else {
+                card.style.cssText = `
+                    z-index: ${newCards.length - index};
+                    transform: translate(-50%, -50%);
+                    opacity: 0;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transition: transform 0.5s ease, opacity 0.5s ease;
+                `;
+            }
         });
-        checkIfAllVoted(newCards.length);
+        checkIfAllVoted();
     }
 
     // Listen for the custom event emitted by Livewire
