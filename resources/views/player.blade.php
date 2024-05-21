@@ -23,10 +23,10 @@
         </div>
     </div>
 
-    <audio src="{{ asset('/songs/Ibiza.mp3') }}" id="audio"></audio>
+    <audio src="{{ asset('/songs/something.mp3') }}" id="audio"></audio>
 
     <div class="img-container">
-        <img src="{{ asset('/images/Ibiza.png') }}" alt="music-cover" id="cover" />
+        <img src="{{ asset('/images/something.png') }}" alt="music-cover" id="cover" />
     </div>
     <div class="navigation">
         <button id="prev" class="action-btn">

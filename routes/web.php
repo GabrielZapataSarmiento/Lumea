@@ -16,7 +16,8 @@ Route::get('/home', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/app', [AppController::class, 'index'])->name('app');
     Route::get('/app/fetch-songs', [AppController::class, 'fetchSongs']);
-    Route::get('/app/songs', [AppController::class, 'getSongNames']);
+    Route::get('/app/songs', [AppController::class, 'getSongs']);
+
 
 
     Route::get('/player', function (){

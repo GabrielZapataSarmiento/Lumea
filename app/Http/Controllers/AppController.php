@@ -22,9 +22,13 @@ class AppController extends Controller
         return response()->json($songs);
     }
 
-    public function getSongNames()
+    public function getSongs()
     {
-        $songs = Song::all('title');
+        // Fetch all songs with their titles and paths
+        $songs = Song::all(['title', 'song_path']);
+
+        // Return the songs as a JSON response
         return response()->json($songs);
     }
+
 }

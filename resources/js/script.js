@@ -12,50 +12,37 @@ const currTime = document.querySelector('#currTime');
 const durTime = document.querySelector('#durTime');
 
 let songs = [];
-
-    // Function to fetch songs from the Laravel endpoint
-    async function fetchSongs() {
-        try {
-            const response = await fetch('/app/songs');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const songsArray = await response.json();
-
-            // Display the array in the console
-            console.log(songsArray);
-
-            // Return the array for further use
-            return songsArray;
-        } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
-        }
-    }
-
-    // Call the function to fetch songs and store them in an array
-    fetchSongs().then(songsArray => {
-        // Use the songsArray here
-        console.log('Fetched Songs Array:', songsArray);
-
-        // Example: Load the first song
-        if (songsArray.length > 0) {
-            loadSong(songsArray[0].name); // Adjust based on your song attributes
-        }
-    });
-
-
-// Call the function to fetch song names
-
-// Keep track of song
 let songIndex = 0;
+
+// Fetch songs from the Laravel endpoint
+fetch('/app/songs')
+    .then(response => response.json())
+    .then(data => {
+        // Store the fetched songs in the global array
+        songs = data;
+
+        // Log the array to the console to see its contents
+        console.log(songs);
+
+        // Ensure the song object has the correct attributes
+        if (songs.length > 0 && songs[songIndex].hasOwnProperty('title') && songs[songIndex].hasOwnProperty('song_path')) {
+            // Load the first song
+            loadSong(songs[songIndex]);
+        } else {
+            console.error('The song object does not have the required attributes.');
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
 
 // Update song details
 function loadSong(song) {
-    title.innerText = song ;
-    audio.src = `./songs/${song}.mp3`;
-    cover.src = `./images/${song}.png`;
-}
 
+    title.innerText = song.title;
+    audio.src = `./songs/${song.song_path}.mp3`;
+    cover.src = `./images/${song.song_path}.png`;
+}
 // Play song
 function playSong() {
     musicContainer.classList.add('play');
