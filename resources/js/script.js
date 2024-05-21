@@ -11,30 +11,30 @@ const cover = document.getElementById('cover');
 const currTime = document.querySelector('#currTime');
 const durTime = document.querySelector('#durTime');
 
+// Fetch songs from the Laravel endpoint
 let songs = [];
-let songIndex = 0;
+let songArrayIndex = 0;
 
 // Fetch songs from the Laravel endpoint
 fetch('/app/songs')
     .then(response => response.json())
     .then(data => {
         // Store the fetched songs in the global array
-        songs = data;
+        songs = data.songs;
 
         // Log the array to the console to see its contents
         console.log(songs);
 
-        // Ensure the song object has the correct attributes
-        if (songs.length > 0 && songs[songIndex].hasOwnProperty('title') && songs[songIndex].hasOwnProperty('song_path')) {
-            // Load the first song
-            loadSong(songs[songIndex]);
-        } else {
-            console.error('The song object does not have the required attributes.');
-        }
+        // Load the first song (highest total count)
+        loadSong(songs[songArrayIndex]);
+
+        // Attempt to automatically play the first song with a delay
+        setTimeout(() => {
+            playSong();
+        }, 1000);
     })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-    });
+    .catch(error => console.error('Error fetching song data:', error));
+
 
 // Update song details
 function loadSong(song) {
@@ -42,7 +42,10 @@ function loadSong(song) {
     title.innerText = song.title;
     audio.src = `./songs/${song.song_path}.mp3`;
     cover.src = `./images/${song.song_path}.png`;
+
+
 }
+
 // Play song
 function playSong() {
     musicContainer.classList.add('play');
@@ -63,27 +66,24 @@ function pauseSong() {
 
 // Previous song
 function prevSong() {
-    songIndex--;
+    songArrayIndex--;
 
-    if (songIndex < 0) {
-        songIndex = songs.length - 1;
+    if (songArrayIndex < 0) {
+        songArrayIndex = songs.length - 1;
     }
 
-    loadSong(songs[songIndex]);
-
+    loadSong(songs[songArrayIndex]);
     playSong();
 }
 
-// Next song
 function nextSong() {
-    songIndex++;
+    songArrayIndex++;
 
-    if (songIndex > songs.length - 1) {
-        songIndex = 0;
+    if (songArrayIndex > songs.length - 1) {
+        songArrayIndex = 0;
     }
 
-    loadSong(songs[songIndex]);
-
+    loadSong(songs[songArrayIndex]);
     playSong();
 }
 

@@ -9,7 +9,7 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
     />
-    <title>Music Player</title>
+    <title>Lumea - Player</title>
 </head>
 <body class="bg-gradient-to-b from-red-600 to-gray-900 text-white min-h-screen flex items-center justify-center">
 
