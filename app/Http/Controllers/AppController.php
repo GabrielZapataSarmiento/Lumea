@@ -21,4 +21,10 @@ class AppController extends Controller
         $songs = Song::all();
         return response()->json($songs);
     }
+
+    public function getSongNames()
+    {
+        $songs = Song::all('title');
+        return response()->json($songs);
+    }
 }

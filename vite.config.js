@@ -8,7 +8,9 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/css/stylesapp.css',
-                'resources/js/swipecards.js'
+                'resources/js/swipecards.js',
+                'resources/css/stylesplayer.css',
+                'resources/js/script.js'
             ],
             refresh: true,
         }),

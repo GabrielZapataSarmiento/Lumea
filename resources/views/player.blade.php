@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <audio src="{{ asset('/music/Ibiza.mp3') }}" id="audio"></audio>
+    <audio src="{{ asset('/songs/Ibiza.mp3') }}" id="audio"></audio>
 
     <div class="img-container">
         <img src="{{ asset('/images/Ibiza.png') }}" alt="music-cover" id="cover" />
