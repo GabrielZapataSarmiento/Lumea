@@ -1,21 +1,31 @@
 document.addEventListener('DOMContentLoaded', function () {
+    let lastVoteTime = 0; // Timestamp of the last vote
+    const VOTE_DELAY = 1000; // Minimum delay between votes in milliseconds
+
     function createButtonListener(love) {
         return function (event) {
             var card = event.target.closest('.card');
             if (!card) return;
+
             var voteType = love ? 'like' : 'dislike';
             console.log('Vote type:', voteType); // Log the voteType
             var moveOutWidth = document.body.clientWidth * 1;
-            card.style.transition = 'transform 0.5s ease, opacity 0.5s ease'; // Apply transition
             card.style.transform = 'translate(' + (love ? moveOutWidth : -moveOutWidth) + 'px, -100px) rotate(' + (love ? -15 : 15) + 'deg)';
             card.style.opacity = '0'; // Reduce opacity while moving
-            if (voteType === 'like') {
-                sendVote(card.getAttribute('data-song-id'), voteType, card);
+
+            const currentTime = Date.now();
+            if (currentTime - lastVoteTime >= VOTE_DELAY) {
+                lastVoteTime = currentTime;
+                if (voteType === 'like') {
+                    sendVote(card.getAttribute('data-song-id'), voteType, card);
+                }
             }
+
             setTimeout(function () {
                 card.remove();
                 checkIfAllVoted();
             }, 500);
+
             event.preventDefault();
         };
     }
@@ -49,8 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function initCards() {
         var newCards = document.querySelectorAll('.card:not(.removed)');
         newCards.forEach(function (card, index) {
+            var offset = index * 2; // Adjust this value to control the offset between cards
             card.style.cssText = 'z-index: ' + (newCards.length - index) +
-                '; transform: none; opacity: 1; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); transition: transform 0.5s ease, opacity 0.5s ease'; // Add opacity transition here
+                '; transform: translate(-50%, calc(-50% + ' + offset + 'px)); opacity: 1; position: absolute; left: 50%; top: calc(50% - ' + offset + 'px); transition: transform 0.5s ease, opacity 0.5s ease'; // Add opacity transition here
         });
         checkIfAllVoted(newCards.length);
     }
@@ -70,7 +81,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 setInterval(function () {
     Livewire.dispatch('loadSongs');
-}, 30000);
-
-
-
+}, 15000);
