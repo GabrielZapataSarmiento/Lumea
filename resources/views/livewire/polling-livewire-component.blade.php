@@ -4,7 +4,7 @@
             <p>No more songs to vote on.</p>
         </div>
     @else
-        @foreach ($songs as $song)
+        @foreach ($songs->shuffle() as $song)
             <livewire:vote-song :song="$song" :key="$song->id" />
         @endforeach
     @endif
