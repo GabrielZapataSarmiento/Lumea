@@ -3,24 +3,19 @@ document.addEventListener('DOMContentLoaded', function () {
         return function (event) {
             var card = event.target.closest('.card');
             if (!card) return;
-
             var voteType = love ? 'like' : 'dislike';
             console.log('Vote type:', voteType); // Log the voteType
-
-            var moveOutWidth = document.body.clientWidth;
+            var moveOutWidth = document.body.clientWidth * 1;
             card.style.transition = 'transform 0.5s ease, opacity 0.5s ease'; // Apply transition
             card.style.transform = 'translate(' + (love ? moveOutWidth : -moveOutWidth) + 'px, -100px) rotate(' + (love ? -15 : 15) + 'deg)';
             card.style.opacity = '0'; // Reduce opacity while moving
-
             if (voteType === 'like') {
                 sendVote(card.getAttribute('data-song-id'), voteType, card);
             }
-
             setTimeout(function () {
-                card.classList.add('removed');
-                initCards(); // Reinitialize cards after one is removed
+                card.remove();
+                checkIfAllVoted();
             }, 500);
-
             event.preventDefault();
         };
     }
@@ -54,29 +49,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function initCards() {
         var newCards = document.querySelectorAll('.card:not(.removed)');
         newCards.forEach(function (card, index) {
-            if (index === 0) {
-                card.style.cssText = `
-                    z-index: ${newCards.length - index};
-                    transform: translate(-50%, -50%);
-                    opacity: 1;
-                    position: absolute;
-                    left: 50%;
-                    top: 50%;
-                    transition: transform 0.5s ease, opacity 0.5s ease;
-                `;
-            } else {
-                card.style.cssText = `
-                    z-index: ${newCards.length - index};
-                    transform: translate(-50%, -50%);
-                    opacity: 0;
-                    position: absolute;
-                    left: 50%;
-                    top: 50%;
-                    transition: transform 0.5s ease, opacity 0.5s ease;
-                `;
-            }
+            card.style.cssText = 'z-index: ' + (newCards.length - index) +
+                '; transform: none; opacity: 1; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); transition: transform 0.5s ease, opacity 0.5s ease'; // Add opacity transition here
         });
-        checkIfAllVoted();
+        checkIfAllVoted(newCards.length);
     }
 
     // Listen for the custom event emitted by Livewire
@@ -94,4 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 setInterval(function () {
     Livewire.dispatch('loadSongs');
-}, 15000);
+}, 30000);
+
+
+
