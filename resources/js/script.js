@@ -24,7 +24,7 @@ function fetchSongs() {
             // Update the songs array with the fetched data
             songs = data.songs;
 
-            loadSong(songs[songArrayIndex]);
+            loadSong(songs[0]);
 
             setTimeout(() => {
                 playSong();
@@ -36,12 +36,43 @@ function fetchSongs() {
     });
 }
 
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+async function setSongAsPlayed(songId) {
+    console.log(`Setting song ${songId} as played`);
+    try {
+        const response = await fetch('/app/setPlayed', { // Ensure this URL matches your route
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+            },
+            body: JSON.stringify({ id: songId })
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data.success) {
+            console.log('Song has been marked as played.');
+        } else {
+            console.error('Failed to mark the song as played.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+
+
 // Update song details
 function loadSong(song) {
 
     title.innerText = song.title;
     audio.src = `./songs/${song.song_path}.mp3`;
     cover.src = `./images/${song.song_path}.webp`;
+
+    setSongAsPlayed(song.id);
 
 }
 
@@ -52,6 +83,8 @@ function playSong() {
     playBtn.querySelector('i.fas').classList.add('fa-pause');
 
     audio.play();
+
+
 }
 
 // Pause song
@@ -65,7 +98,6 @@ function pauseSong() {
 
 // Previous song
 function prevSong() {
-    songArrayIndex--;
 
     if (songArrayIndex < 0) {
         songArrayIndex = songs.length - 1;
@@ -76,7 +108,6 @@ function prevSong() {
 }
 
 function nextSong() {
-    songArrayIndex++;
 
     if (songArrayIndex > songs.length - 1) {
         songArrayIndex = 0;
@@ -89,7 +120,7 @@ function nextSong() {
     setTimeout(() => {
         loadSong(songs[songArrayIndex]);
         playSong();
-    }, 1000);
+    }, 500);
 }
 
 $(document).ready(function() {
