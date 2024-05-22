@@ -10,7 +10,7 @@ class PlaylistController extends Controller
 {
     public function updatePlaylist()
     {
-        // Calculate song rankings based on votes
+        // Calculate song rankings based on votes.blade.php
         $rankedSongs = $this->calculateSongRankings();
 
         // Update playlist logic here (e.g., play the song with the highest ranking)
@@ -33,17 +33,17 @@ class PlaylistController extends Controller
             // Count the number of dislikes for the song
             $dislikes = Vote::where('song_id', $song->id)->where('vote_type', 'dislike')->count();
 
-            // Calculate the total votes (likes - dislikes)
+            // Calculate the total votes.blade.php (likes - dislikes)
             $totalVotes = $likes - $dislikes;
 
-            // Add the song to the ranked songs array along with its total votes
+            // Add the song to the ranked songs array along with its total votes.blade.php
             $rankedSongs[] = [
                 'song' => $song,
                 'total_votes' => $totalVotes,
             ];
         }
 
-        // Sort the ranked songs array based on total votes (descending order)
+        // Sort the ranked songs array based on total votes.blade.php (descending order)
         usort($rankedSongs, function ($a, $b) {
             return $b['total_votes'] - $a['total_votes'];
         });

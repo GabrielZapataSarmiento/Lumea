@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     let lastVoteTime = 0; // Timestamp of the last vote
-    const VOTE_DELAY = 1000; // Minimum delay between votes in milliseconds
+    const VOTE_DELAY = 1000; // Minimum delay between votes.blade.php in milliseconds
 
     function createButtonListener(love) {
         return function (event) {

@@ -50,8 +50,15 @@ class AppController extends Controller
 
         // Return the sorted songs as a JSON response
         return response()->json([
-            'songs' => $sortedSongs,
+            'songs' => $sortedSongs->toArray(), // Convert collection to array
         ]);
     }
+
+
+    public function showSongsWithVotes()
+    {
+        return view('votes');
+    }
+
 
 }

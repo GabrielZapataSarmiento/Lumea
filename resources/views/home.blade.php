@@ -34,10 +34,17 @@
 <body class="outfit bg-gradient-to-b from-red-600 to-gray-900 text-white">
 
 
-<!-- Navigation -->
 @include('layouts.navigation')
 
-<!-- Hero Section -->
+<!-- Page Heading -->
+@if (isset($header))
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            {{ $header }}
+        </div>
+    </header>
+@endif
+
 <!-- Hero Section with Video -->
 <div class="relative bg-yellow-300 overflow-hidden" style="height: 100vh;">
     <video id="heroVideo" class="absolute z-0 w-full h-full object-cover cursor-pointer" autoplay muted loop playsinline onclick="toggleVideo()">

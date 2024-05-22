@@ -16,25 +16,25 @@ let songs = [];
 let songArrayIndex = 0;
 
 // Fetch songs from the Laravel endpoint
-fetch('/app/songs')
-    .then(response => response.json())
-    .then(data => {
-        // Store the fetched songs in the global array
-        songs = data.songs;
+function fetchSongs() {
+    $.ajax({
+        url: '/app/songs',
+        method: 'GET',
+        success: function(data) {
+            // Update the songs array with the fetched data
+            songs = data.songs;
 
-        // Log the array to the console to see its contents
-        console.log(songs);
+            loadSong(songs[songArrayIndex]);
 
-        // Load the first song (highest total count)
-        loadSong(songs[songArrayIndex]);
-
-        // Attempt to automatically play the first song with a delay
-        setTimeout(() => {
-            playSong();
-        }, 1000);
-    })
-    .catch(error => console.error('Error fetching song data:', error));
-
+            setTimeout(() => {
+                playSong();
+            }, 1000);
+        },
+        error: function(error) {
+            console.error('Error fetching songs:', error);
+        }
+    });
+}
 
 // Update song details
 function loadSong(song) {
@@ -42,7 +42,6 @@ function loadSong(song) {
     title.innerText = song.title;
     audio.src = `./songs/${song.song_path}.mp3`;
     cover.src = `./images/${song.song_path}.png`;
-
 
 }
 
@@ -83,9 +82,32 @@ function nextSong() {
         songArrayIndex = 0;
     }
 
-    loadSong(songs[songArrayIndex]);
-    playSong();
+    // Fetch the latest songs data before playing the next song
+    fetchSongs();
+
+    // Ensure the song is loaded and played after fetching new data
+    setTimeout(() => {
+        loadSong(songs[songArrayIndex]);
+        playSong();
+    }, 1000);
 }
+
+$(document).ready(function() {
+    fetchSongs();
+
+    // Set up event listener for when the song ends
+    $('#audio').on('ended', function() {
+        isPlaying = false;
+        nextSong();
+    });
+
+    // Update the songs array in the background every minute
+    setInterval(() => {
+        if (!isPlaying) {
+            fetchSongs();
+        }
+    }, 60000); // Update every 60 seconds
+});
 
 // Update progress bar
 function updateProgress(e) {
