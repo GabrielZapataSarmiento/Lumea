@@ -7,6 +7,7 @@ const audio = document.getElementById('audio');
 const progress = document.getElementById('progress');
 const progressContainer = document.getElementById('progress-container');
 const title = document.getElementById('title');
+const artist = document.getElementById('artist');
 const cover = document.getElementById('cover');
 const currTime = document.querySelector('#currTime');
 const durTime = document.querySelector('#durTime');
@@ -69,6 +70,7 @@ async function setSongAsPlayed(songId) {
 function loadSong(song) {
 
     title.innerText = song.title;
+    artist.innerText = song.artist;
     audio.src = `./songs/${song.song_path}.mp3`;
     cover.src = `./images/${song.song_path}.webp`;
 
