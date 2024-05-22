@@ -43,8 +43,8 @@
         <div class="md:w-1/2">
         <div class="music-container" id="music-container">
             <div class="music-info">
-                    <h2 id="title" class="font-bold text-white">Song Title</h2>
-                    <p id="artist" class="text-gray-400">Artist Name</p>
+                    <h2 id="title" class="font-bold text-white"></h2>
+                    <p id="artist" class="text-gray-400"></p>
                 <div class="progress-container" id="progress-container">
                     <div class="progress" id="progress"></div>
                 </div>
