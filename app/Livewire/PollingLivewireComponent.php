@@ -14,16 +14,18 @@ class PollingLivewireComponent extends Component
 
     public function mount()
     {
-        $this->refreshSongs();
+        $this->refreshSongs(true);
     }
 
-    public function refreshSongs()
+    public function refreshSongs($shuffle = false)
     {
-        logger('Refreshing songs...');
         $user = Auth::user();
         $votedSongIds = $user->votes->pluck('song_id')->toArray();
         $this->songs = Song::whereNotIn('id', $votedSongIds)->get();
-        logger('Songs refreshed: ', $this->songs->toArray());
+
+        if ($shuffle) {
+            $this->songs = $this->songs->shuffle(); // Shuffle only on initial load
+        }
     }
 
     public function render()

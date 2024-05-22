@@ -35,18 +35,17 @@ body {
     border-radius: 30px;
     overflow: hidden;
     background-color: #292830;
-    cursor: grab;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: none;
+    user-select: none;
 }
 
 .card.moving {
     transition: none;
-    cursor: grabbing;
 }
 
 .card.removed {

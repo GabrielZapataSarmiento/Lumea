@@ -8,8 +8,8 @@
             <p>{{ $song->artist }}</p>
         </div>
         <div class="swipe-buttons flex justify-center">
-            <button wire:click="vote('dislike')"><img src="{{ asset('/images/red button.png') }}" alt="Dislike"></button>
-            <button wire:click="vote('like')"><img src="{{ asset('/images/green button.png') }}" alt="Like"></button>
+            <button wire:click="vote('dislike')"><img src="{{ asset('/images/red button.webp') }}" alt="Dislike"></button>
+            <button wire:click="vote('like')"><img src="{{ asset('/images/green button.webp') }}" alt="Like"></button>
         </div>
     </div>
 </div>
