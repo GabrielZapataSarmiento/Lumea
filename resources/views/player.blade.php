@@ -9,7 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
 
-    <!-- In your Blade layout file -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/ICON.webp') }}" />
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
@@ -18,6 +19,14 @@
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
         body {
             font-family: 'Outfit', sans-serif;
+        }
+
+        #songs-list .bg-gray-200 {
+            background-color: #f0f0f0; /* Adjust based on your preferred background color */
+        }
+
+        #songs-list .rounded-full {
+            border-radius: 9999px;
         }
         .fade-in {
             animation: fadeIn 1s;
@@ -85,12 +94,17 @@
                             animationClass = 'fade-out';
                         }
                     }
-                    songsList.append('<div class="bg-white text-black p-4 rounded-lg shadow-lg flex items-center space-x-4 ' + animationClass + '">' +
+                    songsList.append( '<div class="bg-white text-black p-4 rounded-lg shadow-lg flex items-center space-x-4 ' + animationClass + '">' +
                         '<img src="/images/' + song.song_path + '.webp" alt="' + song.title + '" class="w-16 h-16 object-cover rounded-full">' +
-                        '<div>' +
+                        '<div class="flex-grow">' +
                         '<h2 class="text-xl font-semibold">' + song.title + '</h2>' +
+                        '<h3 class="text-md text-gray-500 font-semibold">' + song.artist + '</h3>' +
                         '</div>' +
-                        '</div>');
+                        '<div class="bg-gray-200 text-black py-2 px-4 rounded-full ml-auto">' +
+                        '<p class="text-lg font-semibold">' + song.total_count + ' votes</p>' +
+                        '</div>' +
+                        '</div>'
+                    );
                 });
                 previousData = data.songs;
             }
