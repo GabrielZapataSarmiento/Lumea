@@ -8,23 +8,16 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
-
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/ICON.webp') }}" />
-
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/ICON.webp') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-
     <style>
-
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
         body {
             font-family: 'Outfit', sans-serif;
         }
-
         #songs-list .bg-gray-200 {
-            background-color: #f0f0f0; /* Adjust based on your preferred background color */
+            background-color: #f0f0f0;
         }
-
         #songs-list .rounded-full {
             border-radius: 9999px;
         }
@@ -44,9 +37,10 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-b from-red-600 to-gray-900 text-white min-h-screen flex items-center justify-center">
-<div class="flex w-full max-w-6xl space-x-4">
-    <div class="w-1/2">
+<body class="bg-gradient-to-b from-red-600 to-gray-900 text-white min-h-screen flex flex-col">
+<div class="w-full max-w-6xl mx-auto px-4 py-2 overflow-auto">
+    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+        <div class="md:w-1/2">
         <div class="music-container" id="music-container">
             <div class="music-info">
                 <h4 id="title"></h4>
