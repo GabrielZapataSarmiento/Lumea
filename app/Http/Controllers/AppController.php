@@ -14,6 +14,7 @@ class AppController extends Controller
         $votedSongIds = $user->votes->pluck('song_id')->toArray();
 
         $songs = Song::whereNotIn('id', $votedSongIds)->get();
+
         return view('app', compact('songs'));
     }
 
