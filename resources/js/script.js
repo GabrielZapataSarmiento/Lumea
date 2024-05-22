@@ -98,7 +98,6 @@ function pauseSong() {
 
 // Previous song
 function prevSong() {
-    songArrayIndex--;
 
     if (songArrayIndex < 0) {
         songArrayIndex = songs.length - 1;
@@ -109,7 +108,6 @@ function prevSong() {
 }
 
 function nextSong() {
-    songArrayIndex++;
 
     if (songArrayIndex > songs.length - 1) {
         songArrayIndex = 0;
