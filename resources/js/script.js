@@ -41,7 +41,7 @@ function loadSong(song) {
 
     title.innerText = song.title;
     audio.src = `./songs/${song.song_path}.mp3`;
-    cover.src = `./images/${song.song_path}.png`;
+    cover.src = `./images/${song.song_path}.webp`;
 
 }
 

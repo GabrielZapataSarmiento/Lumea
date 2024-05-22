@@ -80,7 +80,7 @@
                         }
                     }
                     songsList.append('<div class="bg-white text-black p-4 rounded-lg shadow-lg flex items-center space-x-4 ' + animationClass + '">' +
-                        '<img src="/images/' + song.song_path + '.png" alt="' + song.title + '" class="w-16 h-16 object-cover rounded-full">' +
+                        '<img src="/images/' + song.song_path + '.webp" alt="' + song.title + '" class="w-16 h-16 object-cover rounded-full">' +
                         '<div>' +
                         '<h2 class="text-xl font-semibold">' + song.title + '</h2>' +
                         '<p class="text-gray-700">Total Likes: ' + song.like_count + '</p>' +

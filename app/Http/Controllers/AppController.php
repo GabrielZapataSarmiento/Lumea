@@ -56,10 +56,5 @@ class AppController extends Controller
     }
 
 
-    public function showSongsWithVotes()
-    {
-        return view('votes');
-    }
-
 
 }
