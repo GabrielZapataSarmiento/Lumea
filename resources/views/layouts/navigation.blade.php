@@ -7,7 +7,6 @@
                 <div class="flex items-center">
                     <a href="{{ route('home') }}">
                         <img src="{{ asset('images/logo.webp') }}" alt="logo" class="w-12 h-12">
-
                     </a>
                 </div>
 
