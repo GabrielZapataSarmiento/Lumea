@@ -27,8 +27,8 @@ class AppController extends Controller
 
     public function getSongsWithVotes()
     {
-        // Fetch all songs with their titles and paths
-        $songs = Song::all(['id', 'title', 'song_path']);
+        // Fetch all songs with their titles and paths where hasPlayed is false
+        $songs = Song::where('hasPlayed', false)->get(['id', 'title', 'song_path']);
 
         // Add vote counts to each song
         $songsWithVotes = $songs->map(function ($song) {
@@ -55,6 +55,20 @@ class AppController extends Controller
         ]);
     }
 
+    public function setSongPlayed(Request $request)
+    {
+        $songId = $request->input('id');
+        $song = Song::find($songId);
+
+        if ($song) {
+            $song->hasPlayed = true;
+            $song->save();
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false], 404);
+    }
 
 
 }

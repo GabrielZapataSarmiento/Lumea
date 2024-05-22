@@ -13,11 +13,15 @@ Route::get('/home', function () {
     return redirect('/');
 });
 
+Route::post('/app/setPlayed', [AppController::class, 'setSongPlayed']);
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/app', [AppController::class, 'index'])->name('app');
     Route::get('/app/fetch-songs', [AppController::class, 'fetchSongs']);
     Route::get('/app/songs', [AppController::class, 'getSongsWithVotes']);
     Route::get('/app/votes', [AppController::class, 'showSongsWithVotes']);
+
 
 
 
@@ -31,3 +35,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+

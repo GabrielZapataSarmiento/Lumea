@@ -8,7 +8,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+    <!-- In your Blade layout file -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <style>
+
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
         body {
             font-family: 'Outfit', sans-serif;
@@ -83,7 +87,6 @@
                         '<img src="/images/' + song.song_path + '.webp" alt="' + song.title + '" class="w-16 h-16 object-cover rounded-full">' +
                         '<div>' +
                         '<h2 class="text-xl font-semibold">' + song.title + '</h2>' +
-                        '<p class="text-gray-700">Total Likes: ' + song.like_count + '</p>' +
                         '</div>' +
                         '</div>');
                 });
