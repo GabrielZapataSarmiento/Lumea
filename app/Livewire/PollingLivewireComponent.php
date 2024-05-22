@@ -21,7 +21,7 @@ class PollingLivewireComponent extends Component
     {
         $user = Auth::user();
         $votedSongIds = $user->votes->pluck('song_id')->toArray();
-        $this->songs = Song::whereNotIn('id', $votedSongIds)->get();
+        $this->songs = Song::whereNotIn('id', $votedSongIds)->where('hasPlayed', 0)->get();
 
         if ($shuffle) {
             $this->songs = $this->songs->shuffle(); // Shuffle only on initial load

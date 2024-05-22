@@ -13,14 +13,14 @@ class AppController extends Controller
         $user = auth()->user();
         $votedSongIds = $user->votes->pluck('song_id')->toArray();
 
-        $songs = Song::whereNotIn('id', $votedSongIds)->get();
+        $songs = Song::whereNotIn('id', $votedSongIds)->where('hasPlayed', 0)->get();
 
         return view('app', compact('songs'));
     }
 
     public function fetchSongs()
     {
-        $songs = Song::all();
+        $songs = Song::all()->where('hasPlayed', 0);
         return response()->json($songs);
     }
 

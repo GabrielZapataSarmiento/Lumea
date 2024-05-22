@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('artist')->nullable(false);
             $table->string('cover_path')->nullable();
             $table->string('song_path')->nullable();
-            $table->timestamps();
-            $table->softdeletes();
+            $table->boolean('hasPlayed')->default('false');
         });
     }
 
